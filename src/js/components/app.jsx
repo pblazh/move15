@@ -2,7 +2,6 @@ import React from 'react';
 
 const APP_STYLE = {
   width: 400,
-  outline: '1px solid red',
   backgroundColor: 'silver',
 }
 
@@ -13,8 +12,7 @@ function App(props){
 }
 
 const GAMEFIELD_STYLE = {
-  outline: '1px solid black',
-  backgroundColor: 'grey',
+  backgroundColor: '#666666',
   position: 'relative',
   width: 400,
   height: 400

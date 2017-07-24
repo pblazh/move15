@@ -6,18 +6,22 @@ import {moveAction} from '../core/actions';
 const GAMEBLOCK_STYLE = {
   transition: 'all 0.3s',
   userSelect: 'none',
-  backgroundColor: 'green',
-  cursor: 'pointer',
+  backgroundColor: 'silver',
+  cursor: 'default',
   border: '1px solid black',
-  backgroundColor: 'green',
   position: 'absolute',
   width: 100,
   height: 100
 }
 
+const GAMEBLOCK_ACTIVE_STYLE = {
+  cursor: 'pointer',
+  backgroundColor: 'grey',
+}
+
 const GAMEBLOCK_INSIDE_STYLE = {
   pointerEvents: 'none',
-  backgroundColor: 'green',
+  backgroundColor: 'white',
   position: 'absolute',
   fontSize: '50px',
   fontWeight: 'bolder',
@@ -29,16 +33,18 @@ const GAMEBLOCK_INSIDE_STYLE = {
   height: 80
 }
 
+const GAMEBLOCK_INSIDE_PLACED_STYLE = {
+  backgroundColor: '#333333',
+  color: 'white',
+}
+
 function GameBlock(props){
 	var style = Object.assign({}, GAMEBLOCK_STYLE, {
 		left: props.x * GAMEBLOCK_STYLE.width || 0,
 		top: props.y * GAMEBLOCK_STYLE.height|| 0,
-		backgroundColor: props.isActive ? 'red' : GAMEBLOCK_STYLE.backgroundColor,
-		cursor: props.isActive ? 'pointer' : 'default',
-	});
-	var insideStyle = Object.assign({}, GAMEBLOCK_INSIDE_STYLE, {
-		backgroundColor: props.isPlaced ? 'blue' : 'yellow',
-	});
+	}, props.isActive ? GAMEBLOCK_ACTIVE_STYLE : {});
+
+	var insideStyle = Object.assign({}, GAMEBLOCK_INSIDE_STYLE, props.isPlaced ? GAMEBLOCK_INSIDE_PLACED_STYLE : {});
 	return (
 		<div style={style}
 			 id={props.id}

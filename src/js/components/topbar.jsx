@@ -17,9 +17,9 @@ function Title(props){
 const SHUFFLE_STYLE = {
 	textAlign: 'center',
 	backgroundColor: 'grey',
-	border: 'none',
+	borderColor: 'white black black white',
 	fontSize: '23px',
-	width: '94px',
+	width: '98px',
 	padding: 0,
 	height: '50px',
 	fontWeight: 'bold',
