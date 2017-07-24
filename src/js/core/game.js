@@ -3,21 +3,21 @@ import * as _ from "underscore";
 const GAME_STATE = {
 	moves: 0,
 	blocks: [
-		{id: 1,  x: 1, y: 0, isActive: false, isPlaced: false},
-		{id: 2,  x: 2, y: 0, isActive: false, isPlaced: false},
-		{id: 3,  x: 3, y: 0, isActive: false, isPlaced: false},
-		{id: 4,  x: 0, y: 1, isActive: false, isPlaced: false},
-		{id: 5,  x: 1, y: 1, isActive: false, isPlaced: false},
-		{id: 6,  x: 2, y: 1, isActive: false, isPlaced: false},
-		{id: 7,  x: 3, y: 1, isActive: false, isPlaced: false},
-		{id: 8,  x: 0, y: 2, isActive: false, isPlaced: false},
-		{id: 9,  x: 1, y: 2, isActive: false, isPlaced: false},
-		{id: 10, x: 2, y: 2, isActive: false, isPlaced: false},
-		{id: 11, x: 3, y: 2, isActive: false, isPlaced: false},
-		{id: 12, x: 0, y: 3, isActive: false, isPlaced: false},
-		{id: 13, x: 1, y: 3, isActive: false, isPlaced: false},
-		{id: 14, x: 2, y: 3, isActive: false, isPlaced: false},
-		{id: 15, x: 3, y: 3, isActive: false, isPlaced: false},
+		{id: 1,  x: 1, y: 0, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 2,  x: 2, y: 0, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 3,  x: 3, y: 0, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 4,  x: 0, y: 1, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 5,  x: 1, y: 1, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 6,  x: 2, y: 1, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 7,  x: 3, y: 1, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 8,  x: 0, y: 2, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 9,  x: 1, y: 2, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 10, x: 2, y: 2, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 11, x: 3, y: 2, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 12, x: 0, y: 3, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 13, x: 1, y: 3, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 14, x: 2, y: 3, isActive: false, isPlaced: false, isRowPlaced: false},
+		{id: 15, x: 3, y: 3, isActive: false, isPlaced: false, isRowPlaced: false},
 	]
 }
 
@@ -60,6 +60,10 @@ const checkRow = _.memoize(function checkRow(moves, blocks, row){
 	return 'x' + moves + 'x' + row;
 });
 
+function checkPlace(block){
+	return block.value === block.y * 4 + block.x + 1;
+}
+
 function move(from, to){
 	return Object.assign({}, from, to);
 }
@@ -79,7 +83,8 @@ function checkActive(moves, blocks){
 		return {
 			...block,
 			isActive: checkEmpties(blocks, block.id).length > 0,
-			isPlaced: checkRow(moves, blocks, block.y),
+			isPlaced: checkPlace(block),
+			isRowPlaced: checkRow(moves, blocks, block.y),
 		};
 	});
 }
