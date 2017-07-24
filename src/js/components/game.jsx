@@ -67,20 +67,16 @@ function Game(props){
 	);
 }
 
-const mapStateToProps = state => {
-	return {
-		moves: state.moves,
-		blocks: state.blocks,
-	}
-}
+const mapStateToProps = state => ({
+	moves: state.moves,
+	blocks: state.blocks,
+});
 
-const mapDispatchToProps = dispatch => {
-	return {
-		move: (ev) => {
-			dispatch(moveAction(parseInt(ev.target.id)));
-		}
+const mapDispatchToProps = dispatch => ({
+	move: (ev) => {
+		dispatch(moveAction(parseInt(ev.target.id)));
 	}
-}
+});
 
 Game = connect(mapStateToProps, mapDispatchToProps)(Game);
 

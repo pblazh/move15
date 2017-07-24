@@ -1,33 +1,8 @@
 import {GAME_STATE, getInitionalState, replace, move, checkEmpties} from './game';
+import {createActions, handleActions} from 'redux-actions';
 
-const ACTION_MOVE = 'ACTION_MOVE';
-const ACTION_SHUFFLE = 'ACTION_SHUFFLE';
-
-function createAction(type){
-	return function _action_(payload){
-		return {
-			type,
-			payload,
-		};
-	};
-};
-
-function createReducer(type, reducer){
-	return function _reducer_(state = GAME_STATE, action){
-		if(action && action.type === type){
-			return reducer(state, action);
-		}else{
-			return state;
-		}
-	}
-}
-
-function actionShuffle(state, action){
-	return getInitionalState();
-}
-
-function actionMove(state=getInitionalState(), action){
-	const hit = action.payload;
+function actionMove(state, action){
+	const hit = action.payload.id;
 	const empty = checkEmpties(state.blocks, hit).pop();
 	if(empty){
 		return {
@@ -39,14 +14,21 @@ function actionMove(state=getInitionalState(), action){
 	}
 }
 
-const shuffleReducer = createReducer(ACTION_SHUFFLE, actionShuffle);
-const moveReducer = createReducer(ACTION_MOVE, actionMove);
-const shuffleAction = createAction(ACTION_SHUFFLE);
-const moveAction = createAction(ACTION_MOVE);
+const MOVE_ACTION = 'MOVE_ACTION';
+const SHUFFLE_ACTION = 'SHUFFLE_ACTION';
+
+const {moveAction, shuffleAction} = createActions({
+	MOVE_ACTION: id => ({id}),
+	SHUFFLE_ACTION: () => ({}),
+});
+
+const gameReducer = handleActions({
+	MOVE_ACTION: actionMove,
+	SHUFFLE_ACTION: (state, action) => getInitionalState(),
+}, GAME_STATE);
 
 export {
-	shuffleReducer,
-	moveReducer,
+	gameReducer,
 	shuffleAction,
 	moveAction,
 }
